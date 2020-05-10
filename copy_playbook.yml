@@ -1,0 +1,10 @@
+---
+- name: Playbook
+  hosts: App
+  become: true
+  become_user: root
+  tasks:
+   - name: copy files from local to remote location
+     copy:
+      src=/home/ansible/test.txt
+      dest=/home/ansible/test.txt

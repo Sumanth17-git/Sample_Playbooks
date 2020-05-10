@@ -1,0 +1,7 @@
+---
+- name: Install and Configure httpd
+  hosts: localhost
+  become: true
+  roles:
+    - httpd
+   

@@ -1,0 +1,10 @@
+---
+- name: Playbook
+  hosts: all
+  become: true
+  become_user: root
+  tasks:
+   - name: Un-Install httpd package
+     yum:
+      name=httpd
+      state=absent

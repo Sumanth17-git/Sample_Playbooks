@@ -1,0 +1,32 @@
+---
+  - name: Install and Configure Tomcat
+    hosts: web
+    become: yes
+    become_user: root
+    gather_facts: false
+    vars:
+     tomcat_port: 8090
+    tasks:
+     - name: Update yum updates
+       yum:
+        name: "*"
+        state: latest
+     - name: install openjdk
+       yum:
+        name: java-1.8.0-openjdk.x86_64
+        state: present
+     - name: Download Tomcat
+       get_url:
+        url: "http://mirror.vorboss.net/apache/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz"
+        dest: /usr/local
+     - name: Untar Tomcat
+       unarchive:
+        src: "/usr/local/apache-tomcat-9.0.34.tar.gz"
+        dest: /usr/local
+        remote_src: yes
+     - name: Change the default HTTP Port from 8080 to 8090 usinf variables
+       template:
+        src: server.xml.j2
+        dest: /usr/local/apache-tomcat-9.0.34/conf/server.xml
+     - name: Starting Tomcat
+       shell: nohup /usr/local/apache-tomcat-9.0.34/bin/startup.sh &

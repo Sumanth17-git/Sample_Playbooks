@@ -1,0 +1,26 @@
+---
+- name: Playbook
+  hosts: App
+  become: true
+  become_user: root
+  tasks:
+   - name: Create directory
+     file: 
+      path=/home/ansible/Sumanth 
+      state=directory 
+      mode=755 
+      owner=ansible 
+      group=ansible
+   - name: Create a files
+     file: 
+      path=/home/ansible/file1.txt state=touch
+   - name: Copy the directory from local to remote
+     copy: 
+      src=/home/ansible/playbooks/examples 
+      dest=/home/ansible/Sumanth
+   - name: Create a Zip file
+     archive:
+      path: /home/ansible/Sumanth
+      dest: /home/ansible/Sumanth.zip
+      format: zip
+     
